@@ -1,0 +1,17 @@
+# 忽略大型文件夹
+saved_models/
+training_logs/
+logssac1/
+__pycache__/
+
+# 忽略本地 IDE 配置文件
+.claude/
+.vscode/
+
+# 针对 .npy 的精细化管理
+*.npy
+!map/*.npy
+!dataset/*.npy
+
+# 忽略特定的测试结果文件（如果它们不在上述文件夹中）
+test_result_plot*.npy

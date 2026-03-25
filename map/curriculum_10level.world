@@ -1,0 +1,232 @@
+# ============================================================
+# 课程学习 10 级仿真世界
+# 10 个训练区域横向排列，区域间距 15m（自然隔断激光雷达）
+# 区域 N 中心坐标：(N*35, 0)，各区域大小 20×20m
+# 动态障碍物 (roomba_dynamic_1~20) 初始放于 x=600（地图外）
+# ============================================================
+
+# -------- 传感器定义 --------
+define topurg ranger
+(
+  sensor(
+    range [ 0.02 15.0 ]
+    fov 360.00
+    samples 540
+  )
+  color "black"
+  size [ 0.05 0.05 0.1 ]
+)
+
+# -------- 主控机器人定义 --------
+define pr2 position
+(
+  size [0.2 0.2 0.237]
+  origin [0.0 0 0 0]
+  gui_nose 1
+  drive "diff"
+  topurg(pose [ 0.0 0 0.287 0 ])
+  velocity_bounds [-2 2 -2 2 -2 2 -180 180 ]
+  acceleration_bounds [-2 2 -2 2 -2 2 -180 180]
+)
+
+# -------- 动态障碍物（行人）定义 --------
+define roomba position
+(
+  size [0.6 0.6 0.8]
+  origin [0.0 0 0 0]
+  gui_nose 0
+  drive "omni"
+  color "black"
+  block
+  (
+    points 16
+    point[0]  [ 0.3     0.0    ]
+    point[1]  [ 0.2775  0.115  ]
+    point[2]  [ 0.21    0.21   ]
+    point[3]  [ 0.115   0.2775 ]
+    point[4]  [ 0.0     0.3    ]
+    point[5]  [-0.115   0.2775 ]
+    point[6]  [-0.21    0.21   ]
+    point[7]  [-0.2775  0.115  ]
+    point[8]  [-0.3     0.0    ]
+    point[9]  [-0.2775 -0.115  ]
+    point[10] [-0.21   -0.21   ]
+    point[11] [-0.115  -0.2775 ]
+    point[12] [ 0.0    -0.3    ]
+    point[13] [ 0.115  -0.2775 ]
+    point[14] [ 0.21   -0.21   ]
+    point[15] [ 0.2775 -0.115  ]
+    z [0.0 0.75]
+  )
+  obstacle_return 1
+  ranger_return 1
+)
+
+# -------- 目标点可视化标记定义 --------
+define target_marker position
+(
+  size [0.2 0.2 0.2]
+  origin [0.0 0 0 0]
+  gui_nose 0
+  drive "diff"
+  color "yellow"
+  obstacle_return 0
+  ranger_return 0
+  velocity_bounds [-2 2 -2 2 -2 2 -180 180]
+  acceleration_bounds [-2 2 -2 2 -2 2 -180 180]
+)
+
+# -------- 地图模型类型定义 --------
+define floorplan model
+(
+  color "gray30"
+  boundary 1
+  gui_nose 0
+  gui_grid 0
+  gui_outline 0
+  gripper_return 0
+  fiducial_return 0
+  ranger_return 1
+)
+
+# -------- 全局仿真参数 --------
+resolution 0.005
+interval_sim 200
+speedup 2
+window
+(
+  rotate [ 0.000 0.000 ]
+  scale 5.0
+  show_data 1
+)
+
+# ============================================================
+# 10 个训练区域（floorplan）
+# 区域 N: 中心 x = N*35，大小 20×20m，bitmap = regionN.jpg
+# ============================================================
+
+# Level 0: 0 个静态障碍物，2 个行人
+floorplan
+(
+  name "region0"
+  bitmap "./region0.jpg"
+  size [20.0 20.0 1.0]
+  pose [ 0.0 0.0 0 0.0 ]
+)
+
+# Level 1: 3 个静态障碍物，4 个行人
+floorplan
+(
+  name "region1"
+  bitmap "./region1.jpg"
+  size [20.0 20.0 1.0]
+  pose [ 35.0 0.0 0 0.0 ]
+)
+
+# Level 2: 6 个静态障碍物，6 个行人
+floorplan
+(
+  name "region2"
+  bitmap "./region2.jpg"
+  size [20.0 20.0 1.0]
+  pose [ 70.0 0.0 0 0.0 ]
+)
+
+# Level 3: 9 个静态障碍物，8 个行人
+floorplan
+(
+  name "region3"
+  bitmap "./region3.jpg"
+  size [20.0 20.0 1.0]
+  pose [ 105.0 0.0 0 0.0 ]
+)
+
+# Level 4: 12 个静态障碍物，10 个行人
+floorplan
+(
+  name "region4"
+  bitmap "./region4.jpg"
+  size [20.0 20.0 1.0]
+  pose [ 140.0 0.0 0 0.0 ]
+)
+
+# Level 5: 15 个静态障碍物，12 个行人
+floorplan
+(
+  name "region5"
+  bitmap "./region5.jpg"
+  size [20.0 20.0 1.0]
+  pose [ 175.0 0.0 0 0.0 ]
+)
+
+# Level 6: 18 个静态障碍物，14 个行人
+floorplan
+(
+  name "region6"
+  bitmap "./region6.jpg"
+  size [20.0 20.0 1.0]
+  pose [ 210.0 0.0 0 0.0 ]
+)
+
+# Level 7: 21 个静态障碍物，16 个行人
+floorplan
+(
+  name "region7"
+  bitmap "./region7.jpg"
+  size [20.0 20.0 1.0]
+  pose [ 245.0 0.0 0 0.0 ]
+)
+
+# Level 8: 26 个静态障碍物，18 个行人
+floorplan
+(
+  name "region8"
+  bitmap "./region8.jpg"
+  size [20.0 20.0 1.0]
+  pose [ 280.0 0.0 0 0.0 ]
+)
+
+# Level 9: 32 个静态障碍物，20 个行人
+floorplan
+(
+  name "region9"
+  bitmap "./region9.jpg"
+  size [20.0 20.0 1.0]
+  pose [ 315.0 0.0 0 0.0 ]
+)
+
+# ============================================================
+# 主控机器人（初始放于 Level 0 中心，运行时由 Python 代码控制）
+# ============================================================
+pr2( pose [ 0.0 0.0 0 -90.000 ] name "pr2" color "blue" )
+
+# ============================================================
+# 20 个动态障碍物（行人），全部初始放于地图外 x=600
+# 运行时由各 MPI 行人进程通过 /robot_N/cmd_pose 移入当前区域
+# Level N 激活数量：(N+1)*2  （Level 0→2个，Level 9→20个）
+# ============================================================
+roomba( pose [ 600.0  0.0 0.0 0.0 ] name "roomba_dynamic_1"  color "orange" )
+roomba( pose [ 600.0  1.0 0.0 0.0 ] name "roomba_dynamic_2"  color "orange" )
+roomba( pose [ 600.0  2.0 0.0 0.0 ] name "roomba_dynamic_3"  color "orange" )
+roomba( pose [ 600.0  3.0 0.0 0.0 ] name "roomba_dynamic_4"  color "orange" )
+roomba( pose [ 600.0  4.0 0.0 0.0 ] name "roomba_dynamic_5"  color "orange" )
+roomba( pose [ 600.0  5.0 0.0 0.0 ] name "roomba_dynamic_6"  color "orange" )
+roomba( pose [ 600.0  6.0 0.0 0.0 ] name "roomba_dynamic_7"  color "orange" )
+roomba( pose [ 600.0  7.0 0.0 0.0 ] name "roomba_dynamic_8"  color "orange" )
+roomba( pose [ 600.0  8.0 0.0 0.0 ] name "roomba_dynamic_9"  color "orange" )
+roomba( pose [ 600.0  9.0 0.0 0.0 ] name "roomba_dynamic_10" color "orange" )
+roomba( pose [ 600.0 10.0 0.0 0.0 ] name "roomba_dynamic_11" color "orange" )
+roomba( pose [ 600.0 11.0 0.0 0.0 ] name "roomba_dynamic_12" color "orange" )
+roomba( pose [ 600.0 12.0 0.0 0.0 ] name "roomba_dynamic_13" color "orange" )
+roomba( pose [ 600.0 13.0 0.0 0.0 ] name "roomba_dynamic_14" color "orange" )
+roomba( pose [ 600.0 14.0 0.0 0.0 ] name "roomba_dynamic_15" color "orange" )
+roomba( pose [ 600.0 15.0 0.0 0.0 ] name "roomba_dynamic_16" color "orange" )
+roomba( pose [ 600.0 16.0 0.0 0.0 ] name "roomba_dynamic_17" color "orange" )
+roomba( pose [ 600.0 17.0 0.0 0.0 ] name "roomba_dynamic_18" color "orange" )
+roomba( pose [ 600.0 18.0 0.0 0.0 ] name "roomba_dynamic_19" color "orange" )
+roomba( pose [ 600.0 19.0 0.0 0.0 ] name "roomba_dynamic_20" color "orange" )
+
+# ============================================================
+# 目标点可视化标记
+# ============================================================
+target_marker( pose [ 0.0 0.0 0.0 0.0 ] name "target_point" color "green" )
